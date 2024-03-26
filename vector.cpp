@@ -7,10 +7,18 @@ void Vector::dodajFilm(std::string tytul, float ocena) {
     vector1.push_back(film);
 }
 
+void Vector::usuwanieFilmu(int ktoryFilm) {
+    vector1.erase(vector1.begin() + ktoryFilm);
+}
+
 void Vector::wyswietlFilmy() {
     for(int i = 0; i < vector1.size(); i++){
         std::cout << vector1[i].getTytul() << " " << vector1[i].getOcena() << std::endl;
     }
+}
+
+float Vector::getOcenaFloat(int ktoryFilm) {
+    return vector1[ktoryFilm].getOcena();
 }
 
 void scalanie(std::vector<filmy> &vector1, int pierwsza, int srodek, int ostatnia){
@@ -108,37 +116,49 @@ void QuickSortB(std::vector<filmy>::iterator pierwsza, std::vector<filmy>::itera
         QuickSortB(i, ostatnia);
 }
 void Vector::BucketSort(int n) {
-    std::vector<filmy> *bucket = new std::vector<filmy>[n + 1];
-    cout << "check0\n";
+    std::vector<std::vector<filmy>> bucket(n + 1);
     for(int i = 0; i < n; i++){
-        cout << "check1\n";
-        int index = n * (vector1[i].getOcena() / 10); //normalizacja oceny
-        cout << "check2\n";
+        int index = static_cast<int>(n * (vector1[i].getOcena() / 10)); // Normalizacja oceny, dodatkowo zabezpieczone przez static_cast<int>
+        if (index > n) index = n; // Zabezpieczenie przed przekroczeniem zakresu
         bucket[index].push_back(vector1[i]);
-        cout << "check3\n";
     }
-    cout << "check4\n";
     for(int i = 0; i <= n; i++){
-        cout << "check5\n";
         if (!bucket[i].empty()) {
-            cout << "check6\n";
-            QuickSortB(bucket[i].begin(), bucket[i].end());
+            // Sortuj tylko niepuste wiadra
+            QuickSortB(bucket[i].begin(), bucket[i].end() - 1);
         }
     }
-    cout << "check7\n";
     vector1.clear(); // Usuń wszystkie elementy z vector1
-    cout << "check7_1\n";
-    vector1.resize(n); // Zainicjuj vector1 z odpowiednim rozmiarem
 
-    int index = 0;
-    cout << "check8\n";
     for(int i = 0; i <= n; i++){
-        cout << "check9\n";
-        for(int j = 0; j < bucket[i].size(); j++){
-            cout << "check10\n";
-            vector1[index++] = bucket[i][j];
-            cout << "check11\n";
+        for(auto& film : bucket[i]){
+            vector1.push_back(film); // Dodajemy filmy z powrotem do vector1 za pomocą push_back zamiast indeksowania
         }
     }
 
+}
+
+bool Vector::czyPosortowane() {
+    for(int i = 0; i < vector1.size() - 1; i++){
+        if(vector1[i].getOcena() > vector1[i + 1].getOcena())
+            return false;
+    }
+    return true;
+}
+
+float Vector::mediana() {
+    if(vector1.size() % 2 == 0){
+        return (vector1[vector1.size() / 2].getOcena() + vector1[vector1.size() / 2 - 1].getOcena()) / 2;
+    }
+    else{
+        return vector1[vector1.size() / 2].getOcena();
+    }
+}
+
+float Vector::srednia() {
+    float suma = 0;
+    for(int i = 0; i < vector1.size(); i++){
+        suma += vector1[i].getOcena();
+    }
+    return suma / vector1.size();
 }

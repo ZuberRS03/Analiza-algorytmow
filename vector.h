@@ -14,13 +14,23 @@ class Vector {
 
         void dodajFilm(std::string tytul, float ocena);
 
+        void usuwanieFilmu(int ktoryFilm);
+
         void wyswietlFilmy();
+
+        float getOcenaFloat(int ktoryFilm);
 
         void MergeSort(int pierwsza, int ostatnia);
 
         void QuickSort(int pierwsza, int ostatnia);
 
         void BucketSort(int ileLiczb);
+
+        bool czyPosortowane();
+
+        float mediana();
+
+        float srednia();
 
 };
 

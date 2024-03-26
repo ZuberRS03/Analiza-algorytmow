@@ -24,16 +24,19 @@ void rozdzielenie_danych(string liniaTekstu){
     int dlugoscLiniTekstu = liniaTekstu.length();
     int i = dlugoscLiniTekstu - 1;
 
-    while(liniaTekstu[i] != '0'){
+    while(liniaTekstu[i] != '0' and liniaTekstu[i] != ','){
         i--;
     }
-
-    while(liniaTekstu[i] != ','){
-        ocenaString = ocenaString + liniaTekstu[i];
-        i--;
+    if(liniaTekstu[i] == '0'){
+        while(liniaTekstu[i] != ','){
+            ocenaString = ocenaString + liniaTekstu[i];
+            i--;
+        }
+        ocenaString = odwroc_stringa(ocenaString);
+        ocena = stof(ocenaString);
+    } else if(liniaTekstu[i] == ',') {
+        ocena = -1;
     }
-    ocenaString = odwroc_stringa(ocenaString);
-    ocena = stof(ocenaString);
 
     for(int j = 0; j <= i; j++){
         tytul = tytul + liniaTekstu[j];
@@ -54,16 +57,34 @@ void wczytywanie_danych( int ile_danych_wczytac){
     }
 
     File.close();
-
+}
+int usun_puste(int ileDanychWczytac){
+    int licznikUsunientych = 0;
+    for(int i = 0; i < ileDanychWczytac; i++){
+        if(vector1.getOcenaFloat(i) == -1){
+            vector1.usuwanieFilmu(i);
+            i--;
+            licznikUsunientych++;
+        }
+    }
+    return licznikUsunientych;
 }
 int main(){
     int ileDanychWczytac = 0;
     cout << "Ile danych wczytac (max 1010291): ";
     cin >> ileDanychWczytac;
 
+    cout << "Wczytywanie danych..." << endl;
     wczytywanie_danych(ileDanychWczytac);
+    cout << "Dane wczytane" << endl;
+    cout << endl;
+    //vector1.wyswietlFilmy();
 
-    vector1.wyswietlFilmy();
+    int ileDanych = ileDanychWczytac;
+    cout << "Usuwanie pustych danych..." << endl;
+    ileDanych = ileDanychWczytac - usun_puste(ileDanychWczytac);
+
+    //vector1.wyswietlFilmy();
 
     int wyborSortowania;
     cout << endl;
@@ -76,13 +97,13 @@ int main(){
 
     switch(wyborSortowania){
         case 1:
-            vector1.MergeSort(0, ileDanychWczytac - 1);
+            vector1.MergeSort(0, ileDanych - 1);
             break;
         case 2:
-            vector1.QuickSort(0, ileDanychWczytac - 1);
+            vector1.QuickSort(0, ileDanych - 1);
             break;
         case 3:
-            vector1.BucketSort(ileDanychWczytac);
+            vector1.BucketSort(ileDanych);
             break;
         default:
             cout << "Nie ma takiej opcji" << endl;
@@ -90,8 +111,27 @@ int main(){
     }
 
     cout << endl;
-    cout << "Posortowane: " << endl;
+    cout << "Posortowano" << endl;
 
-    vector1.wyswietlFilmy();
+    //vector1.wyswietlFilmy();
+    sprawdzenie:
+    cout << endl;
+    cout << "Czy sprawdzic? (1 - tak, 0 - nie): ";
+    int spr;
+    cin >> spr;
+    if(spr == 1){
+        if(vector1.czyPosortowane() == true){
+            cout << "Posortowane poprwnie" << endl;
+        } else{
+            cout << "Blad w sortowaniu" << endl;
+        }
+    } else if(spr == 0){
+        cout << endl;
+    } else{
+        cout << "Nie ma takiej opcji, wybierz \"1\" lub \"0\":" << endl;
+        goto sprawdzenie;
+    }
+    cout << "Mediana: " << vector1.mediana() << endl;
+    cout << "Srednia: " << vector1.srednia() << endl;
     return 0;
 }
