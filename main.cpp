@@ -2,10 +2,13 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <time.h>
+#include <cstdlib>
 #include "filmy.h"
 #include "vector.h"
 
 using namespace std;
+clock_t start, stop;
 
 Vector vector1;
 
@@ -74,15 +77,24 @@ int main(){
     cout << "Ile danych wczytac (max 1010291): ";
     cin >> ileDanychWczytac;
 
+    double czasWczytywania = 0;
     cout << "Wczytywanie danych..." << endl;
+    start = clock();
     wczytywanie_danych(ileDanychWczytac);
+    stop = clock();
+    czasWczytywania = (double)(stop - start) / CLOCKS_PER_SEC;
     cout << "Dane wczytane" << endl;
     cout << endl;
     //vector1.wyswietlFilmy();
 
+    double czasUsuwania = 0;
     int ileDanych = ileDanychWczytac;
     cout << "Usuwanie pustych danych..." << endl;
+    start = clock();
     ileDanych = ileDanychWczytac - usun_puste(ileDanychWczytac);
+    stop = clock();
+    czasUsuwania = (double)(stop - start) / CLOCKS_PER_SEC;
+    cout << "Puste dane usuniete" << endl;
 
     //vector1.wyswietlFilmy();
 
@@ -95,15 +107,25 @@ int main(){
     cout << "Twoj wybor:";
     cin >> wyborSortowania;
 
+    double czasSortowania = 0;
     switch(wyborSortowania){
         case 1:
+            start = clock();
             vector1.MergeSort(0, ileDanych - 1);
+            stop = clock();
+            czasSortowania = (double)(stop - start) / CLOCKS_PER_SEC;
             break;
         case 2:
+            start = clock();
             vector1.QuickSort(0, ileDanych - 1);
+            stop = clock();
+            czasSortowania = (double)(stop - start) / CLOCKS_PER_SEC;
             break;
         case 3:
+            start = clock();
             vector1.BucketSort(ileDanych);
+            stop = clock();
+            czasSortowania = (double)(stop - start) / CLOCKS_PER_SEC;
             break;
         default:
             cout << "Nie ma takiej opcji" << endl;
@@ -131,6 +153,10 @@ int main(){
         cout << "Nie ma takiej opcji, wybierz \"1\" lub \"0\":" << endl;
         goto sprawdzenie;
     }
+    cout << "Czas wczytywania danych: " << czasWczytywania << "s" << endl;
+    cout << "Czas usuwania pustych danych: " << czasUsuwania << "s" << endl;
+    cout << "Czas sortowania: " << czasSortowania << "s" << endl;
+
     cout << "Mediana: " << vector1.mediana() << endl;
     cout << "Srednia: " << vector1.srednia() << endl;
     return 0;
