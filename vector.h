@@ -6,31 +6,33 @@
 #include "filmy.h"
 
 class Vector {
-    private:
-        std::vector<filmy> vector1;
+private:
+    std::vector<filmy> vector1;
 
-    public:
-        Vector() {}
+public:
+    Vector() {}
 
-        void dodajFilm(std::string tytul, float ocena);
+    void dodajFilm(std::string tytul, float ocena);
 
-        void usuwanieFilmu(int ktoryFilm);
+    void usuwanieFilmu(int ktoryFilm);
 
-        void wyswietlFilmy();
+    void wyswietlFilmy();
 
-        float getOcenaFloat(int ktoryFilm);
+    float getOcenaFloat(int ktoryFilm);
 
-        void MergeSort(int pierwsza, int ostatnia);
+    void MergeSort(int pierwsza, int ostatnia);
 
-        void QuickSort(int pierwsza, int ostatnia);
+    void QuickSort(int pierwsza, int ostatnia);
 
-        void BucketSort(int ileLiczb);
+    void BucketSort(int ileLiczb);
 
-        bool czyPosortowane();
+    bool czyPosortowane();
 
-        float mediana();
+    float mediana();
 
-        float srednia();
+    float srednia();
+
+    int size();
 
 };
 

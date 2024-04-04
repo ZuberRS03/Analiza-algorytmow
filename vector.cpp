@@ -162,3 +162,7 @@ float Vector::srednia() {
     }
     return suma / vector1.size();
 }
+
+int Vector::size() {
+    return vector1.size();
+}

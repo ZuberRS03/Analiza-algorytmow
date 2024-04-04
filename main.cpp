@@ -61,13 +61,14 @@ void wczytywanie_danych( int ile_danych_wczytac){
 
     File.close();
 }
-int usun_puste(int ileDanychWczytac){
+int usun_puste(Vector& vec) {
     int licznikUsunientych = 0;
-    for(int i = 0; i < ileDanychWczytac; i++){
-        if(vector1.getOcenaFloat(i) == -1){
-            vector1.usuwanieFilmu(i);
-            i--;
+    for(int i = 0; i < vec.size();) {
+        if(vec.getOcenaFloat(i) == -1) {
+            vec.usuwanieFilmu(i);
             licznikUsunientych++;
+        } else {
+            i++;
         }
     }
     return licznikUsunientych;
@@ -91,7 +92,7 @@ int main(){
     int ileDanych = ileDanychWczytac;
     cout << "Usuwanie pustych danych..." << endl;
     start = clock();
-    ileDanych = ileDanychWczytac - usun_puste(ileDanychWczytac);
+    ileDanych = ileDanychWczytac - usun_puste(vector1);
     stop = clock();
     czasUsuwania = (double)(stop - start) / CLOCKS_PER_SEC;
     cout << "Puste dane usuniete" << endl;
@@ -159,5 +160,6 @@ int main(){
 
     cout << "Mediana: " << vector1.mediana() << endl;
     cout << "Srednia: " << vector1.srednia() << endl;
+
     return 0;
 }
