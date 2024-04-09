@@ -87,7 +87,7 @@ void Vector::MergeSort(int pierwsza, int ostatnia) {
 void Vector::QuickSort(int pierwsza, int ostatnia) {
     int i = pierwsza;
     int j = ostatnia;
-    float x = vector1[(pierwsza + ostatnia) / 2].getOcena(); // Wybieramy element środkowy jako punkt odniesienia
+    float x = vector1[(pierwsza + ostatnia) / 2].getOcena(); // Wybieramy element środkowy jako punkt odniesienia(pivot)
     do{
         while(vector1[i].getOcena() < x) // Szukamy elementu większego lub równego x od lewej
             i++;
@@ -148,7 +148,9 @@ void Vector::BucketSort(int n) {
      */
     for(int i = 0; i < n; i++){
         int index = static_cast<int>(n * (vector1[i].getOcena() / 10)); // Normalizacja oceny, dodatkowo zabezpieczone przez static_cast<int>
-        if (index > n) index = n; // Zabezpieczenie przed przekroczeniem zakresu
+        if (index > n) {
+            index = n; // Zabezpieczenie przed przekroczeniem zakresu
+        }
         bucket[index].push_back(vector1[i]); // Dodajemy element do kubełka
     }
 

@@ -136,6 +136,12 @@ int main(){
     czasUsuwania = (double)(stop - start) / CLOCKS_PER_SEC;
     cout << "Puste dane usuniete" << endl;
 
+    cout << endl;
+    cout <<"------------------------------------------------------------------------------------------------"<< endl;
+    vector1.wyswietlFilmy();
+    cout <<"------------------------------------------------------------------------------------------------"<< endl;
+    cout << endl;
+
     //menu wyboru sortowania
     int wyborSortowania = menu_wyboru_sortowania();
 
@@ -181,6 +187,12 @@ int main(){
     cout << "Czy sprawdzic posortowanie? (1 - tak, 0 - nie): ";
     int spr;
     cin >> spr;
+
+    cout << endl;
+    cout <<"------------------------------------------------------------------------------------------------"<< endl;
+    vector1.wyswietlFilmy();
+    cout <<"------------------------------------------------------------------------------------------------"<< endl;
+    cout << endl;
 
     //w zależności od wyboru sprawdzenie czy wektor jest posortowany lub nie
     if(spr == 1){
